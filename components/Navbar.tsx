@@ -52,18 +52,9 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'py-3 backdrop-blur-xl border-b border-white/5'
-            : 'py-5'
-        }`}
-        style={{
-          background: scrolled
-            ? 'rgba(8, 8, 8, 0.92)'
-            : 'linear-gradient(to bottom, rgba(8,8,8,0.9) 0%, transparent 100%)',
-        }}
+        className="fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 backdrop-blur-xl bg-[#080808]/95 border-b border-white/10"
       >
-        <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2 flex-shrink-0 group">
             <div className="relative">
@@ -136,7 +127,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {mobileOpen && (
-          <div className="lg:hidden mt-2 mx-4 rounded-2xl glass-dark border border-white/8 overflow-hidden animate-scale-in">
+          <div className="lg:hidden mt-2 mx-4 rounded-2xl glass-dark border border-white/8 overflow-hidden animate-scale-in relative z-[9998]">
             <div className="p-4 flex flex-col gap-1">
               {NAV_LINKS.map((link) => (
                 <a
@@ -159,7 +150,7 @@ export default function Navbar() {
 
       {/* Search Modal */}
       {searchOpen && (
-        <div className="fixed inset-0 z-[100] flex items-start justify-center pt-20 px-4">
+        <div className="fixed inset-0 z-[10000] flex items-start justify-center pt-20 px-4">
           <div
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setSearchOpen(false)}

@@ -16,7 +16,7 @@ export default function HeroSection() {
   const movie = HERO_MOVIE;
 
   return (
-    <section className="relative w-full h-screen min-h-[700px] overflow-hidden">
+    <section className="relative w-full h-screen min-h-[700px] overflow-hidden mt-[100px]">
       {/* Backdrop with Parallax */}
       <div
         className="absolute inset-0"

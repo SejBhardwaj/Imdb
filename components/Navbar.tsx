@@ -63,8 +63,8 @@ export default function Navbar() {
               </div>
             </div>
             <div className="flex items-baseline gap-1">
-              <span className="text-xl font-black text-white tracking-tight">Cine</span>
-              <span className="text-xl font-black text-[#E50914] tracking-tight">Verse</span>
+              <span className="text-xl font-black text-white tracking-tight">IM</span>
+              <span className="text-xl font-black text-[#E50914] tracking-tight">DB</span>
             </div>
           </a>
 

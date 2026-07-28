@@ -146,7 +146,8 @@ class ServiceWorkerManager {
     }
 
     try {
-      await this.registration.sync.register('sync-watchlist');
+      const syncManager = (this.registration as any).sync;
+      await syncManager.register('sync-watchlist');
       console.log('[SW Manager] Background sync registered');
       return true;
     } catch (error) {
@@ -204,7 +205,8 @@ class ServiceWorkerManager {
     // Try Background Sync API first
     if ('sync' in this.registration) {
       try {
-        await this.registration.sync.register('sync-watchlist');
+        const syncManager = (this.registration as any).sync;
+        await syncManager.register('sync-watchlist');
         console.log('[SW Manager] Manual sync triggered via Background Sync API');
         return;
       } catch (error) {

@@ -29,10 +29,19 @@ import {
   Notification,
 } from '@/types/firestore';
 
+// Helper to check if Firestore is initialized
+function ensureFirestore() {
+  if (!db) {
+    throw new Error('Firestore is not initialized. Please configure Firebase.');
+  }
+  return db;
+}
+
 // User Profile
 export const userProfileService = {
   create: async (uid: string, data: Omit<UserProfile, 'uid' | 'createdAt' | 'updatedAt'>) => {
-    const userRef = doc(db, COLLECTIONS.USERS, uid);
+    const firestore = ensureFirestore();
+    const userRef = doc(firestore, COLLECTIONS.USERS, uid);
     const userData: UserProfile = {
       uid,
       ...data,
@@ -44,13 +53,15 @@ export const userProfileService = {
   },
 
   get: async (uid: string): Promise<UserProfile | null> => {
-    const userRef = doc(db, COLLECTIONS.USERS, uid);
+    const firestore = ensureFirestore();
+    const userRef = doc(firestore, COLLECTIONS.USERS, uid);
     const userSnap = await getDoc(userRef);
     return userSnap.exists() ? (userSnap.data() as UserProfile) : null;
   },
 
   update: async (uid: string, data: Partial<UserProfile>) => {
-    const userRef = doc(db, COLLECTIONS.USERS, uid);
+    const firestore = ensureFirestore();
+    const userRef = doc(firestore, COLLECTIONS.USERS, uid);
     await updateDoc(userRef, {
       ...data,
       updatedAt: serverTimestamp(),
@@ -61,13 +72,13 @@ export const userProfileService = {
 // Watchlist Service - Only stores TMDB IDs
 export const watchlistService = {
   get: async (userId: string): Promise<Watchlist | null> => {
-    const watchlistRef = doc(db, COLLECTIONS.WATCHLISTS, userId);
+    const watchlistRef = doc(ensureFirestore(), COLLECTIONS.WATCHLISTS, userId);
     const watchlistSnap = await getDoc(watchlistRef);
     return watchlistSnap.exists() ? (watchlistSnap.data() as Watchlist) : null;
   },
 
   addMovie: async (userId: string, movieId: number) => {
-    const watchlistRef = doc(db, COLLECTIONS.WATCHLISTS, userId);
+    const watchlistRef = doc(ensureFirestore(), COLLECTIONS.WATCHLISTS, userId);
     const watchlist = await watchlistService.get(userId);
 
     if (!watchlist) {
@@ -88,7 +99,7 @@ export const watchlistService = {
   },
 
   removeMovie: async (userId: string, movieId: number) => {
-    const watchlistRef = doc(db, COLLECTIONS.WATCHLISTS, userId);
+    const watchlistRef = doc(ensureFirestore(), COLLECTIONS.WATCHLISTS, userId);
     await updateDoc(watchlistRef, {
       movieIds: arrayRemove(movieId),
       updatedAt: serverTimestamp(),
@@ -96,7 +107,7 @@ export const watchlistService = {
   },
 
   addTVShow: async (userId: string, tvShowId: number) => {
-    const watchlistRef = doc(db, COLLECTIONS.WATCHLISTS, userId);
+    const watchlistRef = doc(ensureFirestore(), COLLECTIONS.WATCHLISTS, userId);
     const watchlist = await watchlistService.get(userId);
 
     if (!watchlist) {
@@ -117,7 +128,7 @@ export const watchlistService = {
   },
 
   removeTVShow: async (userId: string, tvShowId: number) => {
-    const watchlistRef = doc(db, COLLECTIONS.WATCHLISTS, userId);
+    const watchlistRef = doc(ensureFirestore(), COLLECTIONS.WATCHLISTS, userId);
     await updateDoc(watchlistRef, {
       tvShowIds: arrayRemove(tvShowId),
       updatedAt: serverTimestamp(),
@@ -137,13 +148,13 @@ export const watchlistService = {
 // Favorites Service - Only stores TMDB IDs
 export const favoritesService = {
   get: async (userId: string): Promise<Favorites | null> => {
-    const favoritesRef = doc(db, COLLECTIONS.FAVORITES, userId);
+    const favoritesRef = doc(ensureFirestore(), COLLECTIONS.FAVORITES, userId);
     const favoritesSnap = await getDoc(favoritesRef);
     return favoritesSnap.exists() ? (favoritesSnap.data() as Favorites) : null;
   },
 
   addMovie: async (userId: string, movieId: number) => {
-    const favoritesRef = doc(db, COLLECTIONS.FAVORITES, userId);
+    const favoritesRef = doc(ensureFirestore(), COLLECTIONS.FAVORITES, userId);
     const favorites = await favoritesService.get(userId);
 
     if (!favorites) {
@@ -165,7 +176,7 @@ export const favoritesService = {
   },
 
   removeMovie: async (userId: string, movieId: number) => {
-    const favoritesRef = doc(db, COLLECTIONS.FAVORITES, userId);
+    const favoritesRef = doc(ensureFirestore(), COLLECTIONS.FAVORITES, userId);
     await updateDoc(favoritesRef, {
       movieIds: arrayRemove(movieId),
       updatedAt: serverTimestamp(),
@@ -173,7 +184,7 @@ export const favoritesService = {
   },
 
   addTVShow: async (userId: string, tvShowId: number) => {
-    const favoritesRef = doc(db, COLLECTIONS.FAVORITES, userId);
+    const favoritesRef = doc(ensureFirestore(), COLLECTIONS.FAVORITES, userId);
     const favorites = await favoritesService.get(userId);
 
     if (!favorites) {
@@ -195,7 +206,7 @@ export const favoritesService = {
   },
 
   removeTVShow: async (userId: string, tvShowId: number) => {
-    const favoritesRef = doc(db, COLLECTIONS.FAVORITES, userId);
+    const favoritesRef = doc(ensureFirestore(), COLLECTIONS.FAVORITES, userId);
     await updateDoc(favoritesRef, {
       tvShowIds: arrayRemove(tvShowId),
       updatedAt: serverTimestamp(),
@@ -203,7 +214,7 @@ export const favoritesService = {
   },
 
   addActor: async (userId: string, actorId: number) => {
-    const favoritesRef = doc(db, COLLECTIONS.FAVORITES, userId);
+    const favoritesRef = doc(ensureFirestore(), COLLECTIONS.FAVORITES, userId);
     const favorites = await favoritesService.get(userId);
 
     if (!favorites) {
@@ -225,7 +236,7 @@ export const favoritesService = {
   },
 
   removeActor: async (userId: string, actorId: number) => {
-    const favoritesRef = doc(db, COLLECTIONS.FAVORITES, userId);
+    const favoritesRef = doc(ensureFirestore(), COLLECTIONS.FAVORITES, userId);
     await updateDoc(favoritesRef, {
       actorIds: arrayRemove(actorId),
       updatedAt: serverTimestamp(),
@@ -252,7 +263,7 @@ export const favoritesService = {
 // Reviews Service
 export const reviewsService = {
   create: async (data: Omit<Review, 'id' | 'createdAt' | 'updatedAt'>) => {
-    const reviewsRef = collection(db, COLLECTIONS.REVIEWS);
+    const reviewsRef = collection(ensureFirestore(), COLLECTIONS.REVIEWS);
     const reviewData = {
       ...data,
       createdAt: Timestamp.now(),
@@ -263,7 +274,7 @@ export const reviewsService = {
   },
 
   update: async (reviewId: string, data: Partial<Review>) => {
-    const reviewRef = doc(db, COLLECTIONS.REVIEWS, reviewId);
+    const reviewRef = doc(ensureFirestore(), COLLECTIONS.REVIEWS, reviewId);
     await updateDoc(reviewRef, {
       ...data,
       updatedAt: serverTimestamp(),
@@ -271,26 +282,26 @@ export const reviewsService = {
   },
 
   delete: async (reviewId: string) => {
-    const reviewRef = doc(db, COLLECTIONS.REVIEWS, reviewId);
+    const reviewRef = doc(ensureFirestore(), COLLECTIONS.REVIEWS, reviewId);
     await deleteDoc(reviewRef);
   },
 
   getByUser: async (userId: string): Promise<Review[]> => {
-    const reviewsRef = collection(db, COLLECTIONS.REVIEWS);
+    const reviewsRef = collection(ensureFirestore(), COLLECTIONS.REVIEWS);
     const q = query(reviewsRef, where('userId', '==', userId), orderBy('createdAt', 'desc'));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Review));
   },
 
   getByMovie: async (movieId: number): Promise<Review[]> => {
-    const reviewsRef = collection(db, COLLECTIONS.REVIEWS);
+    const reviewsRef = collection(ensureFirestore(), COLLECTIONS.REVIEWS);
     const q = query(reviewsRef, where('movieId', '==', movieId), orderBy('createdAt', 'desc'));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Review));
   },
 
   getUserReviewForMovie: async (userId: string, movieId: number): Promise<Review | null> => {
-    const reviewsRef = collection(db, COLLECTIONS.REVIEWS);
+    const reviewsRef = collection(ensureFirestore(), COLLECTIONS.REVIEWS);
     const q = query(reviewsRef, where('userId', '==', userId), where('movieId', '==', movieId));
     const querySnapshot = await getDocs(q);
     if (querySnapshot.empty) return null;
@@ -302,7 +313,7 @@ export const reviewsService = {
 // Recently Viewed Service
 export const recentlyViewedService = {
   add: async (userId: string, item: Omit<RecentlyViewedItem, 'viewedAt'>) => {
-    const recentlyViewedRef = doc(db, COLLECTIONS.RECENTLY_VIEWED, userId);
+    const recentlyViewedRef = doc(ensureFirestore(), COLLECTIONS.RECENTLY_VIEWED, userId);
     const recentlyViewed = await recentlyViewedService.get(userId);
 
     const newItem: RecentlyViewedItem = {
@@ -331,13 +342,13 @@ export const recentlyViewedService = {
   },
 
   get: async (userId: string): Promise<RecentlyViewed | null> => {
-    const recentlyViewedRef = doc(db, COLLECTIONS.RECENTLY_VIEWED, userId);
+    const recentlyViewedRef = doc(ensureFirestore(), COLLECTIONS.RECENTLY_VIEWED, userId);
     const recentlyViewedSnap = await getDoc(recentlyViewedRef);
     return recentlyViewedSnap.exists() ? (recentlyViewedSnap.data() as RecentlyViewed) : null;
   },
 
   clear: async (userId: string) => {
-    const recentlyViewedRef = doc(db, COLLECTIONS.RECENTLY_VIEWED, userId);
+    const recentlyViewedRef = doc(ensureFirestore(), COLLECTIONS.RECENTLY_VIEWED, userId);
     await updateDoc(recentlyViewedRef, {
       items: [],
       updatedAt: serverTimestamp(),
@@ -348,7 +359,7 @@ export const recentlyViewedService = {
 // Search History Service
 export const searchHistoryService = {
   add: async (userId: string, query: string) => {
-    const searchHistoryRef = doc(db, COLLECTIONS.SEARCH_HISTORY, userId);
+    const searchHistoryRef = doc(ensureFirestore(), COLLECTIONS.SEARCH_HISTORY, userId);
     const searchHistory = await searchHistoryService.get(userId);
 
     const newQuery = {
@@ -377,13 +388,13 @@ export const searchHistoryService = {
   },
 
   get: async (userId: string): Promise<SearchHistory | null> => {
-    const searchHistoryRef = doc(db, COLLECTIONS.SEARCH_HISTORY, userId);
+    const searchHistoryRef = doc(ensureFirestore(), COLLECTIONS.SEARCH_HISTORY, userId);
     const searchHistorySnap = await getDoc(searchHistoryRef);
     return searchHistorySnap.exists() ? (searchHistorySnap.data() as SearchHistory) : null;
   },
 
   clear: async (userId: string) => {
-    const searchHistoryRef = doc(db, COLLECTIONS.SEARCH_HISTORY, userId);
+    const searchHistoryRef = doc(ensureFirestore(), COLLECTIONS.SEARCH_HISTORY, userId);
     await updateDoc(searchHistoryRef, {
       queries: [],
       updatedAt: serverTimestamp(),
@@ -394,7 +405,7 @@ export const searchHistoryService = {
 // Notifications Service
 export const notificationsService = {
   create: async (data: Omit<Notification, 'id' | 'createdAt'>) => {
-    const notificationsRef = collection(db, COLLECTIONS.NOTIFICATIONS);
+    const notificationsRef = collection(ensureFirestore(), COLLECTIONS.NOTIFICATIONS);
     const notificationData = {
       ...data,
       createdAt: Timestamp.now(),
@@ -404,17 +415,17 @@ export const notificationsService = {
   },
 
   markAsRead: async (notificationId: string) => {
-    const notificationRef = doc(db, COLLECTIONS.NOTIFICATIONS, notificationId);
+    const notificationRef = doc(ensureFirestore(), COLLECTIONS.NOTIFICATIONS, notificationId);
     await updateDoc(notificationRef, { read: true });
   },
 
   delete: async (notificationId: string) => {
-    const notificationRef = doc(db, COLLECTIONS.NOTIFICATIONS, notificationId);
+    const notificationRef = doc(ensureFirestore(), COLLECTIONS.NOTIFICATIONS, notificationId);
     await deleteDoc(notificationRef);
   },
 
   getByUser: async (userId: string, limitCount: number = 20): Promise<Notification[]> => {
-    const notificationsRef = collection(db, COLLECTIONS.NOTIFICATIONS);
+    const notificationsRef = collection(ensureFirestore(), COLLECTIONS.NOTIFICATIONS);
     const q = query(
       notificationsRef,
       where('userId', '==', userId),
@@ -426,7 +437,7 @@ export const notificationsService = {
   },
 
   getUnreadCount: async (userId: string): Promise<number> => {
-    const notificationsRef = collection(db, COLLECTIONS.NOTIFICATIONS);
+    const notificationsRef = collection(ensureFirestore(), COLLECTIONS.NOTIFICATIONS);
     const q = query(notificationsRef, where('userId', '==', userId), where('read', '==', false));
     const querySnapshot = await getDocs(q);
     return querySnapshot.size;

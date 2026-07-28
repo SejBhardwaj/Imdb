@@ -45,6 +45,7 @@ export const TMDB_ENDPOINTS = {
   MOVIE_SIMILAR: (id: number) => `/movie/${id}/similar`,
   MOVIE_RECOMMENDATIONS: (id: number) => `/movie/${id}/recommendations`,
   MOVIE_IMAGES: (id: number) => `/movie/${id}/images`,
+  MOVIE_REVIEWS: (id: number) => `/movie/${id}/reviews`,
 
   // TV Shows
   TV_POPULAR: '/tv/popular',

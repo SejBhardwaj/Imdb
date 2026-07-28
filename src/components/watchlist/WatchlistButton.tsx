@@ -55,12 +55,12 @@ export function WatchlistButton({
   const handleToggle = async () => {
     try {
       const result = await toggle(movieId);
-      const action = result.action;
+      const action = result.action === 'added' ? 'add' : 'remove';
       
       setLastAction(action);
 
       // Success toast with undo
-      if (action === 'added') {
+      if (result.action === 'added') {
         onAdd?.();
         toast.success(`${movieTitle} added to watchlist`, {
           action: {

@@ -64,6 +64,11 @@ export const tmdbApi = {
       ),
 
     getImages: (id: number) => tmdbClient.get<TMDBImages>(TMDB_ENDPOINTS.MOVIE_IMAGES(id)),
+
+    getReviews: (id: number, page: number = 1) =>
+      tmdbClient.get<TMDBPaginatedResponse<any>>(TMDB_ENDPOINTS.MOVIE_REVIEWS(id), {
+        params: { page },
+      }),
   },
 
   // TV Shows

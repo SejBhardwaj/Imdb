@@ -376,7 +376,8 @@ class WatchlistRepositoryClass {
       await db.clear('watchlist');
       
       const tx = db.transaction('watchlist', 'readwrite');
-      for (const item of merged.values()) {
+      const items = Array.from(merged.values());
+      for (const item of items) {
         await tx.store.put(item);
       }
       await tx.done;

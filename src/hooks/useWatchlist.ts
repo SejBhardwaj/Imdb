@@ -142,7 +142,7 @@ export function useAddToWatchlist() {
       const previousItem = queryClient.getQueryData<boolean>(watchlistKeys.item(movieId));
 
       // Optimistically update list
-      queryClient.setQueryData<WatchlistItem[]>(watchlistKeys.list(), (old) => {
+      queryClient.setQueryData<WatchlistItem[]>(watchlistKeys.list(), (old: WatchlistItem[] | undefined) => {
         if (!old) return old;
         
         // Check if already exists
@@ -160,7 +160,7 @@ export function useAddToWatchlist() {
       });
 
       // Optimistically update IDs
-      queryClient.setQueryData<Set<number>>(watchlistKeys.ids(), (old) => {
+      queryClient.setQueryData<Set<number>>(watchlistKeys.ids(), (old: Set<number> | undefined) => {
         if (!old) return new Set([movieId]);
         const newSet = new Set(old);
         newSet.add(movieId);
@@ -226,13 +226,13 @@ export function useRemoveFromWatchlist() {
       const previousItem = queryClient.getQueryData<boolean>(watchlistKeys.item(movieId));
 
       // Optimistically remove from list
-      queryClient.setQueryData<WatchlistItem[]>(watchlistKeys.list(), (old) => {
+      queryClient.setQueryData<WatchlistItem[]>(watchlistKeys.list(), (old: WatchlistItem[] | undefined) => {
         if (!old) return old;
         return old.filter(item => item.movieId !== movieId);
       });
 
       // Optimistically remove from IDs
-      queryClient.setQueryData<Set<number>>(watchlistKeys.ids(), (old) => {
+      queryClient.setQueryData<Set<number>>(watchlistKeys.ids(), (old: Set<number> | undefined) => {
         if (!old) return old;
         const newSet = new Set(old);
         newSet.delete(movieId);

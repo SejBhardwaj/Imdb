@@ -10,6 +10,7 @@ interface WatchlistDB extends DBSchema {
       lastModified: number; // for Last-Write-Wins
       deviceId: string; // for conflict resolution
     };
+    indexes: { 'addedAt': number; 'lastModified': number };
   };
   offlineQueue: {
     key: string; // uuid
@@ -21,6 +22,7 @@ interface WatchlistDB extends DBSchema {
       userId: string;
       retryCount: number;
     };
+    indexes: { 'timestamp': number; 'userId': string };
   };
   movieCache: {
     key: number; // movieId
@@ -32,6 +34,7 @@ interface WatchlistDB extends DBSchema {
       voteAverage: number;
       cachedAt: number;
     };
+    indexes: { 'cachedAt': number };
   };
   syncMetadata: {
     key: string; // 'lastSync', 'deviceId', etc.

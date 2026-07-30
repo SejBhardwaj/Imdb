@@ -1,0 +1,500 @@
+export interface Movie {
+  id: number;
+  title: string;
+  year: number;
+  rating: number;
+  votes: string;
+  genres: string[];
+  runtime: string;
+  overview: string;
+  tagline?: string;
+  poster: string;
+  backdrop: string;
+  certification?: string;
+  language?: string;
+  director?: string;
+  cast?: string[];
+  status?: string;
+  revenue?: string;
+  budget?: string;
+  popularity?: number;
+  trailer?: string;
+  provider?: string;
+}
+
+export interface TVShow {
+  id: number;
+  title: string;
+  year: number;
+  rating: number;
+  genres: string[];
+  overview: string;
+  poster: string;
+  backdrop: string;
+  network?: string;
+  seasons?: number;
+}
+
+export interface Actor {
+  id: number;
+  name: string;
+  role: string;
+  photo: string;
+  popularity: number;
+  knownFor?: string;
+}
+
+export const GENRES = [
+  'All', 'Action', 'Adventure', 'Animation', 'Comedy', 'Crime',
+  'Documentary', 'Drama', 'Fantasy', 'Horror', 'Musical',
+  'Mystery', 'Romance', 'Sci-Fi', 'Thriller', 'Biography'
+];
+
+export const TRENDING_MOVIES: Movie[] = [
+  {
+    id: 1,
+    title: 'Dune: Part Two',
+    year: 2024,
+    rating: 8.5,
+    votes: '487K',
+    genres: ['Sci-Fi', 'Adventure', 'Drama'],
+    runtime: '2h 46m',
+    overview: 'Paul Atreides unites with Chani and the Fremen while on a warpath of revenge against the conspirators who destroyed his family.',
+    tagline: 'Long live the fighters.',
+    poster: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/3075993/pexels-photo-3075993.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'PG-13',
+    language: 'English',
+    director: 'Denis Villeneuve',
+    cast: ['Timothée Chalamet', 'Zendaya', 'Rebecca Ferguson', 'Josh Brolin'],
+    popularity: 98.4,
+    provider: 'Prime Video',
+  },
+  {
+    id: 2,
+    title: 'Oppenheimer',
+    year: 2023,
+    rating: 8.9,
+    votes: '623K',
+    genres: ['Biography', 'Drama', 'History'],
+    runtime: '3h 0m',
+    overview: 'The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb during World War II.',
+    tagline: 'The world forever changes.',
+    poster: 'https://images.pexels.com/photos/2873486/pexels-photo-2873486.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'R',
+    language: 'English',
+    director: 'Christopher Nolan',
+    cast: ['Cillian Murphy', 'Emily Blunt', 'Matt Damon', 'Robert Downey Jr.'],
+    popularity: 96.1,
+    provider: 'Peacock',
+  },
+  {
+    id: 3,
+    title: 'Furiosa',
+    year: 2024,
+    rating: 7.8,
+    votes: '312K',
+    genres: ['Action', 'Adventure', 'Sci-Fi'],
+    runtime: '2h 28m',
+    overview: 'The origin story of renegade warrior Furiosa before she teamed up with Max Rockatansky in Mad Max: Fury Road.',
+    tagline: 'Her story begins before the fury.',
+    poster: 'https://images.pexels.com/photos/3075993/pexels-photo-3075993.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1260157/pexels-photo-1260157.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'R',
+    language: 'English',
+    director: 'George Miller',
+    cast: ['Anya Taylor-Joy', 'Chris Hemsworth', 'Tom Burke'],
+    popularity: 87.5,
+    provider: 'Max',
+  },
+  {
+    id: 4,
+    title: 'Deadpool & Wolverine',
+    year: 2024,
+    rating: 7.9,
+    votes: '398K',
+    genres: ['Action', 'Comedy', 'Superhero'],
+    runtime: '2h 7m',
+    overview: 'Deadpool teams up with a variant of Wolverine to save his universe from an existential threat.',
+    tagline: 'Witness the madness.',
+    poster: 'https://images.pexels.com/photos/1983037/pexels-photo-1983037.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1089842/pexels-photo-1089842.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'R',
+    language: 'English',
+    director: 'Shawn Levy',
+    cast: ['Ryan Reynolds', 'Hugh Jackman', 'Emma Corrin'],
+    popularity: 91.2,
+    provider: 'Disney+',
+  },
+  {
+    id: 5,
+    title: 'The Brutalist',
+    year: 2024,
+    rating: 8.4,
+    votes: '89K',
+    genres: ['Drama', 'History'],
+    runtime: '3h 35m',
+    overview: 'A Hungarian-Jewish architect flees Europe after WWII to start a new life in America, where he has the opportunity to build a legacy.',
+    tagline: 'Some will stop at nothing to leave their mark.',
+    poster: 'https://images.pexels.com/photos/2869215/pexels-photo-2869215.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1838640/pexels-photo-1838640.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'R',
+    language: 'English',
+    director: 'Brady Corbet',
+    cast: ['Adrien Brody', 'Felicity Jones', 'Guy Pearce'],
+    popularity: 82.4,
+    provider: 'Apple TV+',
+  },
+  {
+    id: 6,
+    title: 'A Quiet Place: Day One',
+    year: 2024,
+    rating: 7.0,
+    votes: '187K',
+    genres: ['Horror', 'Sci-Fi', 'Thriller'],
+    runtime: '1h 39m',
+    overview: 'A woman living in New York City tries to survive when the alien creatures with ultra-sensitive hearing invade.',
+    tagline: 'Silence was never enough.',
+    poster: 'https://images.pexels.com/photos/2007647/pexels-photo-2007647.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'PG-13',
+    language: 'English',
+    director: 'Michael Sarnoski',
+    cast: ['Lupita Nyong\'o', 'Joseph Quinn', 'Alex Wolff'],
+    popularity: 78.9,
+    provider: 'Paramount+',
+  },
+  {
+    id: 7,
+    title: 'Civil War',
+    year: 2024,
+    rating: 7.2,
+    votes: '221K',
+    genres: ['Action', 'Drama', 'Thriller'],
+    runtime: '1h 49m',
+    overview: 'A team of journalists travel across a dystopian America at war, racing to reach Washington D.C. before rebel forces.',
+    tagline: 'What happens when they turn on themselves?',
+    poster: 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/3585095/pexels-photo-3585095.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'R',
+    language: 'English',
+    director: 'Alex Garland',
+    cast: ['Kirsten Dunst', 'Wagner Moura', 'Cailee Spaeny'],
+    popularity: 74.3,
+    provider: 'Max',
+  },
+  {
+    id: 8,
+    title: 'Alien: Romulus',
+    year: 2024,
+    rating: 7.3,
+    votes: '267K',
+    genres: ['Horror', 'Sci-Fi', 'Thriller'],
+    runtime: '1h 59m',
+    overview: 'A group of young colonists face the most terrifying life form in the universe while scavenging the deep ends of a derelict space station.',
+    tagline: 'Do not face it alone.',
+    poster: 'https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/2150/sky-space-dark-galaxy.jpg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'R',
+    language: 'English',
+    director: 'Fede Álvarez',
+    cast: ['Cailee Spaeny', 'David Jonsson', 'Archie Renaux'],
+    popularity: 88.1,
+    provider: 'Hulu',
+  },
+];
+
+export const FEATURED_MOVIE: Movie = {
+  id: 9,
+  title: 'Gladiator II',
+  year: 2024,
+  rating: 7.4,
+  votes: '245K',
+  genres: ['Action', 'Adventure', 'Drama'],
+  runtime: '2h 28m',
+  overview: 'Years after witnessing the death of the revered hero Maximus at the hands of his uncle, Lucius is forced to enter the Colosseum after his home is conquered by the tyrannical Emperors who now lead Rome with an iron fist.',
+  tagline: 'The time for heroes is not yet over.',
+  poster: 'https://images.pexels.com/photos/3075993/pexels-photo-3075993.jpeg?auto=compress&cs=tinysrgb&w=400',
+  backdrop: 'https://images.pexels.com/photos/3075993/pexels-photo-3075993.jpeg?auto=compress&cs=tinysrgb&w=1400',
+  certification: 'R',
+  language: 'English',
+  director: 'Ridley Scott',
+  cast: ['Paul Mescal', 'Pedro Pascal', 'Connie Nielsen', 'Denzel Washington'],
+  popularity: 85.6,
+  provider: 'Paramount+',
+};
+
+export const HERO_MOVIE: Movie = {
+  id: 10,
+  title: 'Dune: Part Two',
+  year: 2024,
+  rating: 8.5,
+  votes: '487K',
+  genres: ['Sci-Fi', 'Adventure', 'Drama'],
+  runtime: '2h 46m',
+  overview: 'Paul Atreides unites with Chani and the Fremen while on a warpath of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe.',
+  tagline: 'Long live the fighters.',
+  poster: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=500',
+  backdrop: 'https://images.pexels.com/photos/3075993/pexels-photo-3075993.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  certification: 'PG-13',
+  language: 'English',
+  director: 'Denis Villeneuve',
+  cast: ['Timothée Chalamet', 'Zendaya', 'Rebecca Ferguson', 'Josh Brolin'],
+  popularity: 98.4,
+  provider: 'Prime Video',
+};
+
+export const TOP_RATED_MOVIES: Movie[] = [
+  {
+    id: 11,
+    title: 'The Shawshank Redemption',
+    year: 1994,
+    rating: 9.3,
+    votes: '2.9M',
+    genres: ['Drama'],
+    runtime: '2h 22m',
+    overview: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
+    poster: 'https://images.pexels.com/photos/2869215/pexels-photo-2869215.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1838640/pexels-photo-1838640.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'R',
+    director: 'Frank Darabont',
+  },
+  {
+    id: 12,
+    title: 'The Godfather',
+    year: 1972,
+    rating: 9.2,
+    votes: '2.0M',
+    genres: ['Crime', 'Drama'],
+    runtime: '2h 55m',
+    overview: 'An organized crime dynasty\'s aging patriarch transfers control of his clandestine empire to his reluctant son.',
+    poster: 'https://images.pexels.com/photos/2007647/pexels-photo-2007647.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'R',
+    director: 'Francis Ford Coppola',
+  },
+  {
+    id: 13,
+    title: 'The Dark Knight',
+    year: 2008,
+    rating: 9.0,
+    votes: '2.8M',
+    genres: ['Action', 'Crime', 'Drama'],
+    runtime: '2h 32m',
+    overview: 'Batman faces his greatest psychological and physical tests when a criminal mastermind known as the Joker emerges from obscurity.',
+    poster: 'https://images.pexels.com/photos/1983037/pexels-photo-1983037.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1089842/pexels-photo-1089842.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'PG-13',
+    director: 'Christopher Nolan',
+  },
+  {
+    id: 14,
+    title: 'Schindler\'s List',
+    year: 1993,
+    rating: 9.0,
+    votes: '1.4M',
+    genres: ['Biography', 'Drama', 'History'],
+    runtime: '3h 15m',
+    overview: 'In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce.',
+    poster: 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/3585095/pexels-photo-3585095.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'R',
+    director: 'Steven Spielberg',
+  },
+  {
+    id: 15,
+    title: 'Pulp Fiction',
+    year: 1994,
+    rating: 8.9,
+    votes: '2.2M',
+    genres: ['Crime', 'Drama', 'Thriller'],
+    runtime: '2h 34m',
+    overview: 'The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption.',
+    poster: 'https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/2150/sky-space-dark-galaxy.jpg?auto=compress&cs=tinysrgb&w=1400',
+    certification: 'R',
+    director: 'Quentin Tarantino',
+  },
+];
+
+export const TV_SHOWS: TVShow[] = [
+  {
+    id: 1,
+    title: 'The Last of Us',
+    year: 2023,
+    rating: 8.7,
+    genres: ['Drama', 'Horror', 'Thriller'],
+    overview: 'Twenty years after a fungal outbreak turns humans into monsters, Joel smuggles a teenage girl across what remains of the US.',
+    poster: 'https://images.pexels.com/photos/3075993/pexels-photo-3075993.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1260157/pexels-photo-1260157.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    network: 'HBO',
+    seasons: 2,
+  },
+  {
+    id: 2,
+    title: 'House of the Dragon',
+    year: 2022,
+    rating: 8.4,
+    genres: ['Action', 'Drama', 'Fantasy'],
+    overview: 'An internal succession war within House Targaryen at the height of its power, 172 years before the birth of Daenerys Targaryen.',
+    poster: 'https://images.pexels.com/photos/2869215/pexels-photo-2869215.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    network: 'HBO',
+    seasons: 2,
+  },
+  {
+    id: 3,
+    title: 'Loki',
+    year: 2021,
+    rating: 8.2,
+    genres: ['Action', 'Adventure', 'Fantasy'],
+    overview: 'The mercurial villain Loki resumes his role as the God of Mischief in a new series that takes place after the events of Avengers: Endgame.',
+    poster: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1838640/pexels-photo-1838640.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    network: 'Disney+',
+    seasons: 2,
+  },
+  {
+    id: 4,
+    title: 'Wednesday',
+    year: 2022,
+    rating: 8.1,
+    genres: ['Comedy', 'Crime', 'Fantasy'],
+    overview: 'Follows Wednesday Addams\' years as a student at Nevermore Academy, where she attempts to master her psychic powers.',
+    poster: 'https://images.pexels.com/photos/2873486/pexels-photo-2873486.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    network: 'Netflix',
+    seasons: 2,
+  },
+  {
+    id: 5,
+    title: 'Attack on Titan',
+    year: 2013,
+    rating: 9.0,
+    genres: ['Animation', 'Action', 'Drama'],
+    overview: 'After his hometown is destroyed and his mother is killed, young Eren Yeager vows to cleanse the earth of the giant humanoid Titans.',
+    poster: 'https://images.pexels.com/photos/1983037/pexels-photo-1983037.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/3585095/pexels-photo-3585095.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    network: 'Crunchyroll',
+    seasons: 4,
+  },
+  {
+    id: 6,
+    title: 'Stranger Things',
+    year: 2016,
+    rating: 8.7,
+    genres: ['Drama', 'Horror', 'Sci-Fi'],
+    overview: 'When a young boy disappears, his mother, a police chief and his friends must confront terrifying supernatural forces in order to get him back.',
+    poster: 'https://images.pexels.com/photos/1089842/pexels-photo-1089842.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/2007647/pexels-photo-2007647.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    network: 'Netflix',
+    seasons: 4,
+  },
+];
+
+export const POPULAR_ACTORS: Actor[] = [
+  {
+    id: 1,
+    name: 'Cillian Murphy',
+    role: 'Actor',
+    photo: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=300',
+    popularity: 98.2,
+    knownFor: 'Oppenheimer',
+  },
+  {
+    id: 2,
+    name: 'Margot Robbie',
+    role: 'Actress',
+    photo: 'https://images.pexels.com/photos/3671083/pexels-photo-3671083.jpeg?auto=compress&cs=tinysrgb&w=300',
+    popularity: 95.7,
+    knownFor: 'Barbie',
+  },
+  {
+    id: 3,
+    name: 'Ryan Gosling',
+    role: 'Actor',
+    photo: 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=300',
+    popularity: 93.4,
+    knownFor: 'La La Land',
+  },
+  {
+    id: 4,
+    name: 'Zendaya',
+    role: 'Actress',
+    photo: 'https://images.pexels.com/photos/5704720/pexels-photo-5704720.jpeg?auto=compress&cs=tinysrgb&w=300',
+    popularity: 97.1,
+    knownFor: 'Dune',
+  },
+  {
+    id: 5,
+    name: 'Pedro Pascal',
+    role: 'Actor',
+    photo: 'https://images.pexels.com/photos/8348742/pexels-photo-8348742.jpeg?auto=compress&cs=tinysrgb&w=300',
+    popularity: 91.8,
+    knownFor: 'The Last of Us',
+  },
+  {
+    id: 6,
+    name: 'Florence Pugh',
+    role: 'Actress',
+    photo: 'https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=300',
+    popularity: 89.5,
+    knownFor: 'Little Women',
+  },
+];
+
+export const UPCOMING_MOVIES: Movie[] = [
+  {
+    id: 20,
+    title: 'Mission: Impossible 8',
+    year: 2025,
+    rating: 0,
+    votes: '0',
+    genres: ['Action', 'Adventure', 'Thriller'],
+    runtime: 'TBA',
+    overview: 'The eighth installment in the Mission: Impossible franchise.',
+    poster: 'https://images.pexels.com/photos/3585095/pexels-photo-3585095.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    director: 'Christopher McQuarrie',
+  },
+  {
+    id: 21,
+    title: 'Avatar 3',
+    year: 2025,
+    rating: 0,
+    votes: '0',
+    genres: ['Action', 'Adventure', 'Fantasy'],
+    runtime: 'TBA',
+    overview: 'The third chapter in James Cameron\'s Avatar saga.',
+    poster: 'https://images.pexels.com/photos/2150/sky-space-dark-galaxy.jpg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    director: 'James Cameron',
+  },
+  {
+    id: 22,
+    title: 'The Batman 2',
+    year: 2026,
+    rating: 0,
+    votes: '0',
+    genres: ['Action', 'Crime', 'Drama'],
+    runtime: 'TBA',
+    overview: 'The sequel to Matt Reeves\' acclaimed Batman.',
+    poster: 'https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/2873486/pexels-photo-2873486.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    director: 'Matt Reeves',
+  },
+  {
+    id: 23,
+    title: 'Fantastic Four',
+    year: 2025,
+    rating: 0,
+    votes: '0',
+    genres: ['Action', 'Adventure', 'Sci-Fi'],
+    runtime: 'TBA',
+    overview: 'Marvel\'s First Family enters the MCU.',
+    poster: 'https://images.pexels.com/photos/1838640/pexels-photo-1838640.jpeg?auto=compress&cs=tinysrgb&w=400',
+    backdrop: 'https://images.pexels.com/photos/3075993/pexels-photo-3075993.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    director: 'Matt Shakman',
+  },
+];

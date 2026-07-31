@@ -1,18 +1,28 @@
 'use client';
 
 import { Star, Bookmark, Heart, Play, Clock } from 'lucide-react';
-import type { Movie } from '@/lib/mockData';
+import type { Movie } from '@/types/movie';
+import { useRouter } from 'next/navigation';
 
 interface MovieCardProps {
   movie: Movie;
   index?: number;
+  onHover?: () => void;
 }
 
-export default function MovieCard({ movie, index = 0 }: MovieCardProps) {
+export default function MovieCard({ movie, index = 0, onHover }: MovieCardProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/movies/${movie.id}`);
+  };
+
   return (
     <div
       className="movie-card group w-full aspect-[2/3] bg-[#181818] fade-up"
       style={{ animationDelay: `${(index % 6) * 0.06}s` }}
+      onMouseEnter={onHover}
+      onClick={handleClick}
     >
       <img src={movie.poster} alt={movie.title} loading="lazy" />
 
@@ -28,8 +38,12 @@ export default function MovieCard({ movie, index = 0 }: MovieCardProps) {
         <h3 className="text-sm font-bold text-white mb-1 line-clamp-2">{movie.title}</h3>
         <div className="flex items-center gap-2 text-xs text-[#CFCFCF] mb-2">
           <span>{movie.year}</span>
-          <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
-          <span>{movie.runtime}</span>
+          {movie.runtime && (
+            <>
+              <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
+              <span>{movie.runtime}</span>
+            </>
+          )}
         </div>
         <div className="flex flex-wrap gap-1 mb-3">
           {movie.genres.slice(0, 2).map((g) => (
@@ -55,9 +69,13 @@ export default function MovieCard({ movie, index = 0 }: MovieCardProps) {
       <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/85 via-black/30 to-transparent transition-opacity duration-300 group-hover:opacity-0">
         <h3 className="text-sm font-semibold text-white line-clamp-1">{movie.title}</h3>
         <div className="flex items-center gap-1.5 text-xs text-[#CFCFCF] mt-0.5">
-          <Clock size={10} />
-          <span>{movie.runtime}</span>
-          <span className="w-1 h-1 rounded-full bg-[#8B8B8B] mx-0.5" />
+          {movie.runtime && (
+            <>
+              <Clock size={10} />
+              <span>{movie.runtime}</span>
+              <span className="w-1 h-1 rounded-full bg-[#8B8B8B] mx-0.5" />
+            </>
+          )}
           <span>{movie.year}</span>
         </div>
       </div>

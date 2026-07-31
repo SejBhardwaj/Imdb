@@ -1,38 +1,62 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { AuthProvider } from '@/hooks/useAuth';
+import { AuthProvider, useAuth } from '@/hooks/useAuth';
 import { auth } from '@/config/firebase';
+import { ThemeProviderEnhanced } from '@/lib/theme/ThemeContextEnhanced';
+import { RouteThemeProvider } from '@/components/theme/RouteThemeProvider';
+import { QueryProvider } from '@/lib/query';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 1,
-      staleTime: 5 * 60 * 1000, // 5 minutes
-    },
-  },
-});
+/**
+ * Inner provider that has access to auth context
+ */
+function ThemeProviderWrapper({ children }: { children: ReactNode }) {
+  // Only use auth context if Firebase is configured
+  let userId: string | null = null;
+  let enableSync = false;
+
+  try {
+    const { user } = useAuth();
+    userId = user?.uid || null;
+    enableSync = !!user;
+  } catch {
+    // useAuth not available (no AuthProvider wrapper)
+  }
+  
+  return (
+    <ThemeProviderEnhanced 
+      userId={userId}
+      defaultTheme="dark"
+      enableSync={enableSync}
+    >
+      <RouteThemeProvider />
+      {children}
+    </ThemeProviderEnhanced>
+  );
+}
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryProvider>
       {auth ? (
         <AuthProvider>
-          {children}
-          <ReactQueryDevtools initialIsOpen={false} />
+          <ThemeProviderWrapper>
+            {children}
+          </ThemeProviderWrapper>
         </AuthProvider>
       ) : (
-        <>
+        <ThemeProviderEnhanced 
+          userId={null}
+          defaultTheme="dark"
+          enableSync={false}
+        >
+          <RouteThemeProvider />
           {children}
-          <ReactQueryDevtools initialIsOpen={false} />
-          <div className="fixed bottom-4 right-4 bg-yellow-500 text-black px-4 py-2 rounded-lg text-sm">
+          <div className="fixed bottom-4 right-4 bg-yellow-500 text-black px-4 py-2 rounded-lg text-sm z-[9999]">
             ⚠️ Firebase not configured. Add environment variables to enable auth.
           </div>
-        </>
+        </ThemeProviderEnhanced>
       )}
-    </QueryClientProvider>
+    </QueryProvider>
   );
 }

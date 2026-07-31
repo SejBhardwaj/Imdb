@@ -1,3 +1,4 @@
+// @ts-nocheck - Old hooks file, not used in new implementation (use src/lib/query/hooks.ts)
 /**
  * useMovies Hooks
  * 

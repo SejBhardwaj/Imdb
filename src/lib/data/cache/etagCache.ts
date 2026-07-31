@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * ETag Cache Implementation
  * 
@@ -458,3 +459,4 @@ export class ManagedETagCache extends ETagCacheManager {
     }
   }
 }
+

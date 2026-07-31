@@ -1,10 +1,30 @@
 'use client';
 
 import { Play, Star, Clock, Calendar, Plus, Heart, Share2, Award, Film } from 'lucide-react';
-import { FEATURED_MOVIE } from '@/lib/mockData';
+import { usePopularMovies } from '@/lib/query/hooks';
 
 export default function FeaturedMovie() {
-  const movie = FEATURED_MOVIE;
+  const { data, isLoading } = usePopularMovies(1);
+
+  // Use second popular movie as featured (first is in hero)
+  const movie = data?.results?.[1];
+
+  if (isLoading || !movie) {
+    return (
+      <section className="relative py-16 md:py-24 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="relative rounded-3xl overflow-hidden bg-[rgb(var(--color-surface))] aspect-[16/10] animate-pulse" />
+            <div className="space-y-4">
+              <div className="h-8 bg-[rgb(var(--color-surface))] rounded animate-pulse w-3/4" />
+              <div className="h-4 bg-[rgb(var(--color-surface))] rounded animate-pulse w-1/2" />
+              <div className="h-20 bg-[rgb(var(--color-surface))] rounded animate-pulse" />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative py-16 md:py-24 overflow-hidden">
@@ -42,33 +62,47 @@ export default function FeaturedMovie() {
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-3">
               {movie.title}
             </h2>
-            <p className="text-base text-[#E50914] italic mb-6">"{movie.tagline}"</p>
+            {movie.tagline && (
+              <p className="text-base text-[#E50914] italic mb-6">"{movie.tagline}"</p>
+            )}
 
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <span className="flex items-center gap-1.5 text-sm text-[#CFCFCF]">
                 <Calendar size={14} /> {movie.year}
               </span>
-              <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
-              <span className="flex items-center gap-1.5 text-sm text-[#CFCFCF]">
-                <Clock size={14} /> {movie.runtime}
-              </span>
-              <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
-              <span className="text-sm text-[#CFCFCF]">{movie.certification}</span>
+              {movie.runtime && (
+                <>
+                  <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
+                  <span className="flex items-center gap-1.5 text-sm text-[#CFCFCF]">
+                    <Clock size={14} /> {movie.runtime}
+                  </span>
+                </>
+              )}
+              {movie.certification && (
+                <>
+                  <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
+                  <span className="text-sm text-[#CFCFCF]">{movie.certification}</span>
+                </>
+              )}
             </div>
 
             <p className="text-base text-[#CFCFCF] leading-relaxed mb-6">{movie.overview}</p>
 
             {/* Cast */}
-            <div className="mb-6">
-              <p className="text-xs text-[#8B8B8B] uppercase tracking-widest mb-2">Starring</p>
-              <p className="text-sm text-white">{movie.cast?.join(', ')}</p>
-            </div>
+            {movie.cast && movie.cast.length > 0 && (
+              <div className="mb-6">
+                <p className="text-xs text-[#8B8B8B] uppercase tracking-widest mb-2">Starring</p>
+                <p className="text-sm text-white">{movie.cast.join(', ')}</p>
+              </div>
+            )}
 
             {/* Director */}
-            <div className="mb-8">
-              <p className="text-xs text-[#8B8B8B] uppercase tracking-widest mb-2">Director</p>
-              <p className="text-sm text-white">{movie.director}</p>
-            </div>
+            {movie.director && (
+              <div className="mb-8">
+                <p className="text-xs text-[#8B8B8B] uppercase tracking-widest mb-2">Director</p>
+                <p className="text-sm text-white">{movie.director}</p>
+              </div>
+            )}
 
             {/* Buttons */}
             <div className="flex flex-wrap gap-3">

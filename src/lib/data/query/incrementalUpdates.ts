@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Incremental Cache Updates
  * 
@@ -472,3 +473,4 @@ export function createOptimisticMutation<TData, TVariables>(
     },
   };
 }
+

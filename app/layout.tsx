@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import { Providers } from '@/providers/Providers';
 import { WatchlistAnnouncer, OfflineBanner } from '@/components/watchlist/WatchlistAnnouncer';
 import { ServiceWorkerInitializer } from '@/components/ServiceWorkerInitializer';
+import { ThemeScript, ThemeNoScript } from '@/components/theme/ThemeScript';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,8 +25,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} font-sans bg-[#080808] text-white antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Flash-free theme initialization */}
+        <ThemeScript />
+        <ThemeNoScript />
+      </head>
+      <body className={`${inter.variable} font-sans antialiased`}>
         <Providers>
           {/* Accessibility: ARIA-live announcements for screen readers */}
           <WatchlistAnnouncer />
@@ -42,3 +48,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+

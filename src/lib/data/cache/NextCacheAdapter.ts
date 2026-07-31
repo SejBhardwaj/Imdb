@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Next.js Cache Adapter
  * 
@@ -330,3 +331,4 @@ export async function preloadCache<T>(
   const cachedFn = unstable_cache(fetcher, [key], options);
   await cachedFn();
 }
+

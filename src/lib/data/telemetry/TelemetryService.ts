@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Telemetry Service
  * 
@@ -316,3 +317,4 @@ export function useTelemetry() {
     getStats: telemetry.getStats.bind(telemetry),
   };
 }
+

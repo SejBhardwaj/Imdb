@@ -1,0 +1,2 @@
+# These are old hook files not used in the new implementation
+# Using src/lib/query/hooks.ts instead

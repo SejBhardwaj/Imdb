@@ -1,38 +1,36 @@
+'use client';
+
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
-import MovieCarousel from '@/components/MovieCarousel';
+import TrendingMoviesSection from '@/components/data/TrendingMoviesSection';
+import PopularMoviesSection from '@/components/data/PopularMoviesSection';
 import FeaturedMovie from '@/components/FeaturedMovie';
-import MoviesSection from '@/components/MoviesSection';
-import TopRated from '@/components/TopRated';
+import TopRatedMoviesSection from '@/components/data/TopRatedMoviesSection';
+import UpcomingMoviesSection from '@/components/data/UpcomingMoviesSection';
 import TVShows from '@/components/TVShows';
 import ActorSpotlight from '@/components/ActorSpotlight';
 import Footer from '@/components/Footer';
-import { TRENDING_MOVIES, UPCOMING_MOVIES } from '@/lib/mockData';
-import { Flame, Clapperboard, Calendar, TrendingUp } from 'lucide-react';
+
+// Disable static generation for this page (uses client-side data fetching)
+export const dynamic = 'force-dynamic';
 
 export default function Home() {
   return (
-    <main className="relative bg-[#080808] min-h-screen">
+    <main className="relative bg-[rgb(var(--color-background))] min-h-screen">
       <Navbar />
       <HeroSection />
 
-      {/* Trending Today */}
-      <MovieCarousel
-        id="trending"
-        title="Trending Today"
-        icon={<Flame size={20} />}
-        accent
-        movies={TRENDING_MOVIES}
-      />
+      {/* Trending Today - Real TMDb Data */}
+      <TrendingMoviesSection />
 
-      {/* Discover Movies with genre filter */}
-      <MoviesSection />
+      {/* Popular Movies - Real TMDb Data */}
+      <PopularMoviesSection />
 
       {/* Featured Collection */}
       <FeaturedMovie />
 
-      {/* Top Rated */}
-      <TopRated />
+      {/* Top Rated - Real TMDb Data */}
+      <TopRatedMoviesSection />
 
       {/* Popular TV Shows */}
       <TVShows />
@@ -40,12 +38,8 @@ export default function Home() {
       {/* Actor Spotlight */}
       <ActorSpotlight />
 
-      {/* Upcoming Releases */}
-      <MovieCarousel
-        title="Upcoming Releases"
-        icon={<Calendar size={20} />}
-        movies={UPCOMING_MOVIES}
-      />
+      {/* Upcoming Releases - Real TMDb Data */}
+      <UpcomingMoviesSection />
 
       <Footer />
     </main>

@@ -2,19 +2,37 @@
 
 import { useState, useMemo } from 'react';
 import { Clapperboard, Star } from 'lucide-react';
-import MovieCard from './MovieCard';
+import { MovieCard } from '@/components/data/MovieCard';
 import GenreFilter from './GenreFilter';
-import { TRENDING_MOVIES, TOP_RATED_MOVIES, UPCOMING_MOVIES } from '@/lib/mockData';
+import { useDiscoverMovies, useGenres, usePrefetchMovie } from '@/lib/query/hooks';
 
 export default function MoviesSection() {
   const [activeGenre, setActiveGenre] = useState('All');
+  const prefetchMovie = usePrefetchMovie();
 
-  const allMovies = useMemo(() => [...TRENDING_MOVIES, ...TOP_RATED_MOVIES.slice(0, 3), ...UPCOMING_MOVIES], []);
+  // Get genres for filter
+  const { data: genresData } = useGenres();
 
-  const filteredMovies = useMemo(() => {
-    if (activeGenre === 'All') return allMovies;
-    return allMovies.filter((m) => m.genres.includes(activeGenre));
-  }, [allMovies, activeGenre]);
+  // Build discover options based on selected genre
+  const discoverOptions = useMemo(() => {
+    if (activeGenre === 'All') {
+      return { page: 1, sort_by: 'popularity.desc' };
+    }
+    
+    // Find genre ID from name
+    const genre = genresData?.find(g => g.name === activeGenre);
+    if (!genre) return { page: 1, sort_by: 'popularity.desc' };
+    
+    return {
+      page: 1,
+      sort_by: 'popularity.desc',
+      with_genres: genre.id.toString(),
+    };
+  }, [activeGenre, genresData]);
+
+  const { data, isLoading, isError } = useDiscoverMovies(discoverOptions);
+
+  const movies = data?.results || [];
 
   return (
     <section id="movies" className="relative py-16 md:py-24">
@@ -38,10 +56,28 @@ export default function MoviesSection() {
         </div>
 
         {/* Grid */}
-        {filteredMovies.length > 0 ? (
+        {isLoading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-            {filteredMovies.map((movie, i) => (
-              <MovieCard key={`${movie.id}-${i}`} movie={movie} index={i} />
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="aspect-[2/3] rounded-lg bg-[rgb(var(--color-surface))] animate-pulse" />
+            ))}
+          </div>
+        ) : isError ? (
+          <div className="text-center py-20">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl glass mb-4">
+              <Star size={24} className="text-[#8B8B8B]" />
+            </div>
+            <p className="text-white font-medium mb-1">Failed to load movies</p>
+            <p className="text-sm text-[#8B8B8B]">Please try again later</p>
+          </div>
+        ) : movies.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {movies.map((movie, i) => (
+              <MovieCard 
+                key={`${movie.id}-${i}`} 
+                movie={movie} 
+                onHover={() => prefetchMovie(movie.id)}
+              />
             ))}
           </div>
         ) : (

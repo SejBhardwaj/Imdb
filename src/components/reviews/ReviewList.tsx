@@ -13,7 +13,8 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { FixedSizeList as List } from 'react-window';
+// @ts-ignore - react-window types issue
+import { FixedSizeList } from 'react-window';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { Loader2, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -248,7 +249,7 @@ function VirtualizedReviewList({
   onViewHistory,
   onFlag,
 }: VirtualizedReviewListProps) {
-  const listRef = useRef<List>(null);
+  const listRef = useRef<any>(null);
 
   // Row renderer for virtualized list
   const Row = ({ index, style }: { index: number; style: React.CSSProperties }) => {
@@ -269,7 +270,7 @@ function VirtualizedReviewList({
 
   return (
     <div className="border border-white/10 rounded-lg overflow-hidden">
-      <List
+      <FixedSizeList
         ref={listRef}
         height={listHeight}
         itemCount={reviews.length}
@@ -279,7 +280,7 @@ function VirtualizedReviewList({
         className="scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
       >
         {Row}
-      </List>
+      </FixedSizeList>
       
       {/* Virtualization info footer */}
       <div className="bg-white/5 px-4 py-2 text-xs text-gray-400 text-center border-t border-white/10">

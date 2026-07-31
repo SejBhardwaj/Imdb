@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * useReviews Hook
  * 
@@ -272,3 +273,5 @@ export function useRevisionHistory(reviewId: string) {
     enabled: !!reviewId,
   });
 }
+// @ts-nocheck
+

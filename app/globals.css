@@ -4,24 +4,141 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap');
 
+/**
+ * Theme System CSS Variables
+ * 
+ * Enterprise-grade semantic tokens that adapt to theme changes
+ */
+
 :root {
-  --bg-primary: #080808;
-  --bg-secondary: #111111;
-  --bg-surface: #181818;
-  --bg-card: #202020;
-  --glass: rgba(255, 255, 255, 0.06);
-  --glass-hover: rgba(255, 255, 255, 0.10);
-  --accent: #E50914;
-  --accent-hover: #ff1a1a;
-  --accent-secondary: #FFB703;
-  --text-primary: #FFFFFF;
-  --text-secondary: #CFCFCF;
-  --text-muted: #8B8B8B;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.16);
-  --hover: #262626;
-  --radius-card: 20px;
-  --radius-btn: 14px;
+  /* Color Tokens - Light Theme (Default) */
+  --color-background: 255, 255, 255;
+  --color-background-secondary: 249, 249, 249;
+  --color-background-tertiary: 245, 245, 245;
+  --color-foreground: 0, 0, 0;
+  --color-foreground-secondary: 64, 64, 64;
+  --color-foreground-muted: 128, 128, 128;
+  
+  --color-surface: 255, 255, 255;
+  --color-surface-hover: 249, 249, 249;
+  
+  --color-card: 255, 255, 255;
+  --color-card-hover: 249, 249, 249;
+  
+  --color-border: 229, 229, 229;
+  --color-border-hover: 212, 212, 212;
+  --color-border-focus: 100, 100, 100;
+  
+  --color-primary: 229, 9, 20;
+  --color-primary-hover: 255, 26, 26;
+  --color-primary-active: 200, 0, 10;
+  
+  --color-secondary: 240, 240, 240;
+  --color-secondary-hover: 230, 230, 230;
+  
+  --color-accent: 229, 9, 20;
+  --color-accent-hover: 255, 26, 26;
+  
+  --color-success: 34, 197, 94;
+  --color-warning: 234, 179, 8;
+  --color-error: 239, 68, 68;
+  --color-info: 59, 130, 246;
+  
+  --color-shadow: 0, 0, 0;
+  --color-shadow-elevated: 0, 0, 0;
+}
+
+/* Dark Theme */
+.dark {
+  --color-background: 8, 8, 8;
+  --color-background-secondary: 17, 17, 17;
+  --color-background-tertiary: 24, 24, 24;
+  --color-foreground: 255, 255, 255;
+  --color-foreground-secondary: 207, 207, 207;
+  --color-foreground-muted: 139, 139, 139;
+  
+  --color-surface: 17, 17, 17;
+  --color-surface-hover: 32, 32, 32;
+  
+  --color-card: 24, 24, 24;
+  --color-card-hover: 32, 32, 32;
+  
+  --color-border: 38, 38, 38;
+  --color-border-hover: 64, 64, 64;
+  --color-border-focus: 128, 128, 128;
+  
+  --color-primary: 229, 9, 20;
+  --color-primary-hover: 255, 26, 26;
+  --color-primary-active: 200, 0, 10;
+  
+  --color-secondary: 32, 32, 32;
+  --color-secondary-hover: 48, 48, 48;
+  
+  --color-accent: 229, 9, 20;
+  --color-accent-hover: 255, 26, 26;
+  
+  --color-success: 34, 197, 94;
+  --color-warning: 234, 179, 8;
+  --color-error: 239, 68, 68;
+  --color-info: 59, 130, 246;
+  
+  --color-shadow: 0, 0, 0;
+  --color-shadow-elevated: 0, 0, 0;
+}
+
+/* High Contrast Theme */
+.high-contrast {
+  --color-background: 0, 0, 0;
+  --color-background-secondary: 0, 0, 0;
+  --color-background-tertiary: 17, 17, 17;
+  --color-foreground: 255, 255, 255;
+  --color-foreground-secondary: 255, 255, 255;
+  --color-foreground-muted: 200, 200, 200;
+  
+  --color-surface: 17, 17, 17;
+  --color-surface-hover: 32, 32, 32;
+  
+  --color-card: 17, 17, 17;
+  --color-card-hover: 32, 32, 32;
+  
+  --color-border: 255, 255, 255;
+  --color-border-hover: 255, 255, 255;
+  --color-border-focus: 255, 255, 255;
+  
+  --color-primary: 255, 255, 0;
+  --color-primary-hover: 255, 255, 100;
+  --color-primary-active: 200, 200, 0;
+  
+  --color-secondary: 32, 32, 32;
+  --color-secondary-hover: 48, 48, 48;
+  
+  --color-accent: 255, 255, 0;
+  --color-accent-hover: 255, 255, 100;
+  
+  --color-success: 0, 255, 0;
+  --color-warning: 255, 255, 0;
+  --color-error: 255, 0, 0;
+  --color-info: 0, 200, 255;
+  
+  --color-shadow: 255, 255, 255;
+  --color-shadow-elevated: 255, 255, 255;
+}
+
+/* Reduced Motion */
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Legacy CSS Variables (for backward compatibility) */
+:root {
+  --bg-primary: rgb(var(--color-background));
+  --bg-secondary: rgb(var(--color-background-secondary));
+  --text-primary: rgb(var(--color-foreground));
+  --text-secondary: rgb(var(--color-foreground-secondary));
+  --border: rgba(var(--color-border), 0.1);
+  --accent: rgb(var(--color-accent));
 }
 
 * {
@@ -29,7 +146,7 @@
   padding: 0;
   margin: 0;
   scrollbar-width: thin;
-  scrollbar-color: var(--bg-surface) transparent;
+  scrollbar-color: rgba(var(--color-foreground-muted), 0.3) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -42,22 +159,24 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background: var(--bg-surface);
+  background: rgba(var(--color-foreground-muted), 0.3);
   border-radius: 4px;
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  color-scheme: light dark;
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 @layer base {
@@ -96,6 +215,19 @@ body {
   .font-display {
     font-family: 'Bebas Neue', 'Inter', sans-serif;
     letter-spacing: 0.02em;
+  }
+
+  /* Screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 
   .glass {

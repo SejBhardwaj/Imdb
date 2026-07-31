@@ -39,8 +39,10 @@ export async function PATCH(
       },
     };
 
-    // Broadcast update via SSE
-    broadcastReviewEdit(validated.movieId || 0, updatedReview);
+    // Broadcast update via SSE (if movieId is provided)
+    if ('movieId' in validated && typeof validated.movieId === 'number') {
+      broadcastReviewEdit(validated.movieId, updatedReview);
+    }
 
     return NextResponse.json(updatedReview);
   } catch (error: any) {

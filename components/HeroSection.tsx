@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { Play, Star, Clock, Calendar, Plus, Share2, ChevronDown, Flame } from 'lucide-react';
-import { HERO_MOVIE } from '@/lib/mockData';
+import { useTrendingMovies } from '@/lib/query/hooks';
 
 export default function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
+  const { data, isLoading } = useTrendingMovies('week', 1);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -13,7 +14,16 @@ export default function HeroSection() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const movie = HERO_MOVIE;
+  // Use first trending movie as hero
+  const movie = data?.results?.[0];
+
+  if (isLoading || !movie) {
+    return (
+      <section className="relative w-full h-screen min-h-[700px] overflow-hidden mt-[100px]">
+        <div className="absolute inset-0 bg-[rgb(var(--color-surface))] animate-pulse" />
+      </section>
+    );
+  }
 
   return (
     <section className="relative w-full h-screen min-h-[700px] overflow-hidden mt-[100px]">
@@ -49,7 +59,7 @@ export default function HeroSection() {
                 <span className="text-xs font-bold text-white uppercase tracking-wider">Trending #1 Today</span>
               </div>
               <div className="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full glass border-white/8">
-                <span className="text-xs text-[#CFCFCF]">{movie.popularity}% Popularity</span>
+                <span className="text-xs text-[#CFCFCF]">{Math.round((movie.popularity || 0) / 10)}% Popularity</span>
               </div>
             </div>
 
@@ -59,9 +69,11 @@ export default function HeroSection() {
             </h1>
 
             {/* Tagline */}
-            <p className="text-lg text-[#E50914] font-medium italic mb-6 fade-up stagger-2">
-              "{movie.tagline}"
-            </p>
+            {movie.tagline && (
+              <p className="text-lg text-[#E50914] font-medium italic mb-6 fade-up stagger-2">
+                "{movie.tagline}"
+              </p>
+            )}
 
             {/* Meta Row */}
             <div className="flex flex-wrap items-center gap-3 mb-6 fade-up stagger-3">
@@ -71,11 +83,21 @@ export default function HeroSection() {
               </div>
               <span className="text-sm text-[#CFCFCF]">{movie.year}</span>
               <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
-              <span className="text-sm text-[#CFCFCF]">{movie.runtime}</span>
-              <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
-              <span className="text-sm text-[#CFCFCF]">{movie.certification}</span>
-              <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
-              <span className="text-sm text-[#CFCFCF] hidden sm:block">English</span>
+              {movie.runtime && (
+                <>
+                  <span className="text-sm text-[#CFCFCF]">{movie.runtime}</span>
+                  <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
+                </>
+              )}
+              {movie.certification && (
+                <>
+                  <span className="text-sm text-[#CFCFCF]">{movie.certification}</span>
+                  <span className="w-1 h-1 rounded-full bg-[#8B8B8B]" />
+                </>
+              )}
+              {movie.language && (
+                <span className="text-sm text-[#CFCFCF] hidden sm:block">{movie.language}</span>
+              )}
             </div>
 
             {/* Genres */}
@@ -116,10 +138,12 @@ export default function HeroSection() {
               <div className="relative poster-shadow rounded-2xl overflow-hidden card-hover">
                 <img src={movie.poster} alt={movie.title} className="w-full aspect-[2/3] object-cover" />
                 <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
-                  <p className="text-xs text-white/60 mb-1">Director</p>
-                  <p className="text-sm text-white font-medium">{movie.director}</p>
-                </div>
+                {movie.director && (
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
+                    <p className="text-xs text-white/60 mb-1">Director</p>
+                    <p className="text-sm text-white font-medium">{movie.director}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

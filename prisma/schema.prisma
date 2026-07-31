@@ -1,0 +1,69 @@
+// Enterprise Theme System Database Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or "sqlite" for development
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String?
+  preferences   UserPreferences?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model UserPreferences {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Theme Settings
+  theme                 String   @default("system") // "light" | "dark" | "system" | "high-contrast"
+  resolvedTheme         String?  // Actual resolved theme
+  accentColor           String   @default("blue") // "blue" | "purple" | "green" | "orange"
+  
+  // Accessibility
+  highContrastEnabled   Boolean  @default(false)
+  reducedMotion         Boolean  @default(false)
+  largeText             Boolean  @default(false)
+  strongFocusRings      Boolean  @default(false)
+  fontScale             Float    @default(1.0) // 0.875, 1.0, 1.125, 1.25
+  
+  // Advanced Settings
+  animations            Boolean  @default(true)
+  borderRadius          String   @default("medium") // "none" | "small" | "medium" | "large"
+  density               String   @default("comfortable") // "compact" | "comfortable" | "spacious"
+  
+  // Auto Theme Schedule (future)
+  autoScheduleEnabled   Boolean  @default(false)
+  autoScheduleSunrise   String?  // Time string "06:00"
+  autoScheduleSunset    String?  // Time string "18:00"
+  
+  // Metadata
+  deviceId              String?  // Track which device last updated
+  lastSyncedAt          DateTime @default(now())
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  @@index([userId])
+  @@index([updatedAt])
+}
+
+model ThemeAnalytics {
+  id                String   @id @default(cuid())
+  userId            String?
+  theme             String
+  switchedFrom      String?
+  switchedTo        String
+  deviceType        String?
+  timestamp         DateTime @default(now())
+  
+  @@index([userId])
+  @@index([timestamp])
+}

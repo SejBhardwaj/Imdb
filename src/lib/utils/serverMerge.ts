@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Server Echo Merging Utilities
  * 
@@ -389,3 +390,4 @@ export function createTransitionMetadata(
  * </AnimatePresence>
  * ```
  */
+

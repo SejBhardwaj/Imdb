@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
+import { getBackdropUrl, getPosterUrl, getProfileUrl } from '@/lib/images/imageBuilder';
 
 interface MovieDetailsClientProps {
   movie: MovieDetails;
@@ -34,11 +35,8 @@ export function MovieDetailsClient({
     videos?.find((v) => v.type === 'Trailer' && v.official) || videos?.[0] || null
   );
 
-  const backdropUrl = movie.backdropPath
-    ? `${imageBaseUrl}w1280${movie.backdropPath}`
-    : null;
-
-  const posterUrl = movie.posterPath ? `${imageBaseUrl}w500${movie.posterPath}` : null;
+  const backdropUrl = getBackdropUrl(movie.backdropPath, 'large');
+  const posterUrl = getPosterUrl(movie.posterPath, 'medium');
 
   const year = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : 'N/A';
   const runtime = movie.runtime ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : 'N/A';
@@ -53,7 +51,7 @@ export function MovieDetailsClient({
       {/* Hero Section */}
       <div className="relative">
         {/* Backdrop */}
-        {backdropUrl && (
+        {movie.backdropPath && (
           <div className="relative h-[50vh] w-full overflow-hidden rounded-lg">
             <Image
               src={backdropUrl}
@@ -67,10 +65,10 @@ export function MovieDetailsClient({
         )}
 
         {/* Content Overlay */}
-        <div className={backdropUrl ? 'absolute bottom-0 left-0 right-0 p-6' : 'p-6'}>
+        <div className={movie.backdropPath ? 'absolute bottom-0 left-0 right-0 p-6' : 'p-6'}>
           <div className="flex flex-col gap-6 md:flex-row">
             {/* Poster */}
-            {posterUrl && (
+            {movie.posterPath && (
               <div className="flex-shrink-0">
                 <div className="relative h-[300px] w-[200px] overflow-hidden rounded-lg shadow-2xl">
                   <Image src={posterUrl} alt={movie.title} fill className="object-cover" />
@@ -214,7 +212,7 @@ export function MovieDetailsClient({
                     <Avatar>
                       {cast.profilePath ? (
                         <AvatarImage
-                          src={`${imageBaseUrl}w185${cast.profilePath}`}
+                          src={getProfileUrl(cast.profilePath, 'small')}
                           alt={cast.name}
                         />
                       ) : (

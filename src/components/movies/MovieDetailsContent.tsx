@@ -9,6 +9,9 @@ import { Play, Star, Clock, Calendar, Plus, Heart, Share2, ChevronLeft } from 'l
 import { useRouter } from 'next/navigation';
 import type { MovieDetails, Credits, VideoCollection, PaginatedResponse, Movie } from '@/types/movie';
 import { MovieCard } from '@/components/data/MovieCard';
+import { MovieBackdrop } from '@/components/images/MovieBackdrop';
+import { MoviePoster } from '@/components/images/MoviePoster';
+import { ActorAvatar } from '@/components/images/ActorAvatar';
 
 interface MovieDetailsContentProps {
   movieData: {
@@ -34,10 +37,13 @@ export default function MovieDetailsContent({ movieData }: MovieDetailsContentPr
       <section className="relative w-full h-[90vh] min-h-[600px] overflow-hidden">
         {/* Backdrop */}
         <div className="absolute inset-0">
-          <img
-            src={details.backdrop}
+          <MovieBackdrop
+            path={details.backdrop}
             alt={details.title}
-            className="w-full h-full object-cover"
+            size="original"
+            priority
+            quality={90}
+            className="w-full h-full"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--color-background))] via-[rgb(var(--color-background))]/80 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--color-background))] via-transparent to-transparent" />
@@ -152,7 +158,13 @@ export default function MovieDetailsContent({ movieData }: MovieDetailsContentPr
               <div className="relative group">
                 <div className="absolute -inset-2 bg-gradient-to-br from-[rgb(var(--color-primary))]/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative poster-shadow rounded-2xl overflow-hidden">
-                  <img src={details.poster} alt={details.title} className="w-full aspect-[2/3] object-cover" />
+                  <MoviePoster
+                    path={details.poster}
+                    alt={details.title}
+                    size="large"
+                    priority
+                    className="w-full aspect-[2/3]"
+                  />
                   <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl" />
                 </div>
               </div>
@@ -169,17 +181,12 @@ export default function MovieDetailsContent({ movieData }: MovieDetailsContentPr
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
               {credits.cast.slice(0, 12).map((member) => (
                 <div key={member.id} className="text-center">
-                  {member.profile_path ? (
-                    <img
-                      src={`https://image.tmdb.org/t/p/w185${member.profile_path}`}
-                      alt={member.name}
-                      className="w-full aspect-[2/3] object-cover rounded-lg mb-3"
-                    />
-                  ) : (
-                    <div className="w-full aspect-[2/3] bg-gray-800 rounded-lg mb-3 flex items-center justify-center">
-                      <span className="text-gray-600 text-4xl">{member.name[0]}</span>
-                    </div>
-                  )}
+                  <ActorAvatar
+                    path={member.profile_path}
+                    name={member.name}
+                    size="medium"
+                    className="mb-3"
+                  />
                   <p className="text-sm font-medium text-white">{member.name}</p>
                   <p className="text-xs text-gray-500">{member.character}</p>
                 </div>

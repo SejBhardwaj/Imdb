@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { Star, Clock, Calendar } from 'lucide-react';
 import FavoriteButton from './FavoriteButton';
 import ShareButton from './ShareButton';
+import { getBackdropUrl, getPosterUrl } from '@/lib/images/imageBuilder';
 
 interface MovieHeroProps {
   movie: any;
@@ -21,13 +22,8 @@ interface MovieHeroProps {
 }
 
 export default function MovieHero({ movie, movieId }: MovieHeroProps) {
-  const backdropUrl = movie.backdrop_path
-    ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
-    : null;
-
-  const posterUrl = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : null;
+  const backdropUrl = getBackdropUrl(movie.backdrop_path, 'original');
+  const posterUrl = getPosterUrl(movie.poster_path, 'medium');
 
   const releaseYear = movie.release_date
     ? new Date(movie.release_date).getFullYear()
@@ -40,7 +36,7 @@ export default function MovieHero({ movie, movieId }: MovieHeroProps) {
   return (
     <div className="relative">
       {/* Backdrop Image */}
-      {backdropUrl && (
+      {movie.backdrop_path && (
         <div className="absolute inset-0 w-full h-full">
           <Image
             src={backdropUrl}
@@ -60,7 +56,7 @@ export default function MovieHero({ movie, movieId }: MovieHeroProps) {
       <div className="relative container mx-auto px-6 py-24 md:py-32">
         <div className="flex flex-col md:flex-row gap-8 items-start">
           {/* Poster */}
-          {posterUrl && (
+          {movie.poster_path && (
             <div className="flex-shrink-0 w-64 hidden md:block">
               <div className="relative aspect-[2/3] rounded-lg overflow-hidden shadow-2xl">
                 <Image

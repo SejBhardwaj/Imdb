@@ -3,6 +3,7 @@
 import { Star, Bookmark, Heart, Play, Clock } from 'lucide-react';
 import type { Movie } from '@/types/movie';
 import { useRouter } from 'next/navigation';
+import { MoviePoster } from '@/components/images/MoviePoster';
 
 interface MovieCardProps {
   movie: Movie;
@@ -19,15 +20,21 @@ export default function MovieCard({ movie, index = 0, onHover }: MovieCardProps)
 
   return (
     <div
-      className="movie-card group w-full aspect-[2/3] bg-[#181818] fade-up"
+      className="movie-card group w-full aspect-[2/3] bg-[#181818] fade-up relative rounded-lg overflow-hidden cursor-pointer"
       style={{ animationDelay: `${(index % 6) * 0.06}s` }}
       onMouseEnter={onHover}
       onClick={handleClick}
     >
-      <img src={movie.poster} alt={movie.title} loading="lazy" />
+      <MoviePoster
+        path={movie.poster}
+        alt={movie.title}
+        size="medium"
+        priority={index < 6}
+        fill
+      />
 
       {/* Top-right rating */}
-      <div className="rating-top flex items-center gap-1 px-2.5 py-1 rounded-lg glass-dark border border-white/10">
+      <div className="rating-top flex items-center gap-1 px-2.5 py-1 rounded-lg glass-dark border border-white/10 absolute top-2 right-2 z-10">
         <Star size={11} className="text-[#FFB703] fill-[#FFB703]" />
         <span className="text-xs font-bold text-white">{movie.rating}</span>
       </div>

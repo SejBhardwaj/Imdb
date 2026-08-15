@@ -2,6 +2,7 @@
 
 import { Tv, Star } from 'lucide-react';
 import { TV_SHOWS } from '@/lib/mockData';
+import { MoviePoster } from '@/components/images/MoviePoster';
 
 export default function TVShows() {
   return (
@@ -28,7 +29,13 @@ export default function TVShows() {
               className="movie-card group w-full aspect-[2/3] bg-[#181818] fade-up"
               style={{ animationDelay: `${(i % 6) * 0.06}s` }}
             >
-              <img src={show.poster} alt={show.title} className="w-full h-full object-cover" loading="lazy" />
+              <MoviePoster 
+                path={show.poster} 
+                alt={show.title}
+                size="medium"
+                fill
+                className="w-full h-full"
+              />
 
               {/* Top-right rating */}
               <div className="rating-top flex items-center gap-1 px-2.5 py-1 rounded-lg glass-dark border border-white/10">

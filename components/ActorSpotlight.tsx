@@ -2,6 +2,7 @@
 
 import { Users, Star, TrendingUp, ArrowUpRight } from 'lucide-react';
 import { POPULAR_ACTORS } from '@/lib/mockData';
+import { ActorAvatar } from '@/components/images/ActorAvatar';
 
 export default function ActorSpotlight() {
   return (
@@ -32,7 +33,13 @@ export default function ActorSpotlight() {
               style={{ animationDelay: `${(i % 6) * 0.08}s` }}
             >
               <div className="relative aspect-square rounded-2xl overflow-hidden mb-3 card-hover">
-                <img src={actor.photo} alt={actor.name} className="w-full h-full object-cover" loading="lazy" />
+                <ActorAvatar 
+                  path={actor.photo} 
+                  name={actor.name}
+                  size="large"
+                  circular={false}
+                  className="w-full h-full"
+                />
                 <div className="absolute inset-0 ring-1 ring-inset ring-white/10" />
                 {/* Hover gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

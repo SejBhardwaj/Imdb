@@ -2,6 +2,7 @@
 
 import { Star, Trophy } from 'lucide-react';
 import { TOP_RATED_MOVIES } from '@/lib/mockData';
+import { MoviePoster } from '@/components/images/MoviePoster';
 
 export default function TopRated() {
   return (
@@ -35,7 +36,12 @@ export default function TopRated() {
 
               {/* Poster */}
               <div className="relative w-16 h-24 sm:w-20 sm:h-28 rounded-lg overflow-hidden flex-shrink-0">
-                <img src={movie.poster} alt={movie.title} className="w-full h-full object-cover" loading="lazy" />
+                <MoviePoster
+                  path={movie.poster}
+                  alt={movie.title}
+                  size="small"
+                  fill
+                />
                 <div className="absolute inset-0 ring-1 ring-inset ring-white/10" />
               </div>
 

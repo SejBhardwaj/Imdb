@@ -2,6 +2,7 @@
 
 import { Play, Star, Clock, Calendar, Plus, Heart, Share2, Award, Film } from 'lucide-react';
 import { usePopularMovies } from '@/lib/query/hooks';
+import { MovieBackdrop } from '@/components/images/MovieBackdrop';
 
 export default function FeaturedMovie() {
   const { data, isLoading } = usePopularMovies(1);
@@ -34,7 +35,13 @@ export default function FeaturedMovie() {
           <div className="relative fade-up">
             <div className="absolute -inset-4 bg-gradient-to-tr from-[#E50914]/20 via-transparent to-transparent rounded-3xl blur-2xl opacity-60" />
             <div className="relative rounded-3xl overflow-hidden poster-shadow group">
-              <img src={movie.backdrop} alt={movie.title} className="w-full aspect-[16/10] object-cover" />
+              <MovieBackdrop 
+                path={movie.backdrop} 
+                alt={movie.title}
+                size="large"
+                priority
+                className="w-full aspect-[16/10]"
+              />
               <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-3xl" />
               {/* Play button overlay */}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

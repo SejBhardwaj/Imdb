@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Play, Star, Clock, Calendar, Plus, Share2, ChevronDown, Flame } from 'lucide-react';
 import { useTrendingMovies } from '@/lib/query/hooks';
+import { MovieBackdrop } from '@/components/images/MovieBackdrop';
+import { MoviePoster } from '@/components/images/MoviePoster';
 
 export default function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
@@ -35,11 +37,13 @@ export default function HeroSection() {
           transition: 'transform 0.1s linear',
         }}
       >
-        <img
-          src={movie.backdrop}
+        <MovieBackdrop
+          path={movie.backdrop}
           alt={movie.title}
-          className="w-full h-full object-cover"
-          style={{ objectPosition: 'center 20%' }}
+          size="original"
+          priority
+          quality={90}
+          className="w-full h-full"
         />
         {/* Layered gradients */}
         <div className="absolute inset-0 hero-gradient" />
@@ -136,7 +140,13 @@ export default function HeroSection() {
             <div className="relative group">
               <div className="absolute -inset-2 bg-gradient-to-br from-[#E50914]/20 to-transparent rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative poster-shadow rounded-2xl overflow-hidden card-hover">
-                <img src={movie.poster} alt={movie.title} className="w-full aspect-[2/3] object-cover" />
+                <MoviePoster
+                  path={movie.poster}
+                  alt={movie.title}
+                  size="large"
+                  priority
+                  className="w-full aspect-[2/3]"
+                />
                 <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl" />
                 {movie.director && (
                   <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">

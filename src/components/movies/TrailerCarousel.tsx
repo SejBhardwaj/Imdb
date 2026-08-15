@@ -14,9 +14,11 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { Play, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { prefetchVideo } from '@/lib/tmdb/prefetch';
+import { getYouTubeThumbnail } from '@/lib/images/imageBuilder';
 
 interface Video {
   id: string;
@@ -150,12 +152,17 @@ export default function TrailerCarousel({ videos, movieId }: TrailerCarouselProp
           >
             {/* Thumbnail */}
             {currentVideo.site === 'YouTube' && (
-              <img
-                src={`https://img.youtube.com/vi/${currentVideo.key}/maxresdefault.jpg`}
-                alt={currentVideo.name}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
+              <div className="relative w-full h-full">
+                <Image
+                  src={getYouTubeThumbnail(currentVideo.key, 'maxresdefault')}
+                  alt={currentVideo.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1280px"
+                  quality={85}
+                  priority={currentIndex === 0}
+                />
+              </div>
             )}
 
             {/* Play Button Overlay */}

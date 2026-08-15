@@ -40,7 +40,7 @@ export const RESOLVED_THEMES: readonly ResolvedTheme[] = ['light', 'dark', 'high
 /**
  * Accent Colors
  */
-export const ACCENT_COLORS: readonly AccentColor[] = [
+export const ACCENT_COLOR_LIST: readonly AccentColor[] = [
   'red',
   'blue',
   'green',

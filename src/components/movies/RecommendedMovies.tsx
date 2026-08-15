@@ -8,6 +8,7 @@ import { tmdbApi } from '@/lib/tmdb/api';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Star } from 'lucide-react';
+import { getPosterUrl } from '@/lib/images/imageBuilder';
 
 interface RecommendedMoviesProps {
   movieId: number;
@@ -49,7 +50,7 @@ export default async function RecommendedMovies({ movieId }: RecommendedMoviesPr
             <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-white/5">
               {movie.poster_path ? (
                 <Image
-                  src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
+                  src={getPosterUrl(movie.poster_path, 'medium')}
                   alt={movie.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"

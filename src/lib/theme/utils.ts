@@ -15,7 +15,7 @@ import type { ThemeMode, ResolvedTheme, AccentColor } from './types';
 import {
   THEME_MODES,
   RESOLVED_THEMES,
-  ACCENT_COLORS,
+  ACCENT_COLOR_LIST,
   THEME_DEFAULTS,
   VALIDATION,
 } from './constants';
@@ -38,7 +38,7 @@ export function isValidResolvedTheme(theme: unknown): theme is ResolvedTheme {
  * Validate accent color
  */
 export function isValidAccentColor(color: unknown): color is AccentColor {
-  return typeof color === 'string' && ACCENT_COLORS.includes(color as AccentColor);
+  return typeof color === 'string' && ACCENT_COLOR_LIST.includes(color as AccentColor);
 }
 
 /**

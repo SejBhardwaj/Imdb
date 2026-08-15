@@ -1,4 +1,4 @@
 {
-  "framework": "nextjs",
-  "buildCommand": "npm install --force && npx prisma generate && npm run build"
+  "installCommand": "npm install --legacy-peer-deps",
+  "buildCommand": "npx prisma generate && npm run build"
 }

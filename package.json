@@ -18,12 +18,14 @@
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
     "test:install": "playwright install",
-    "test:watchlist": "playwright test tests/watchlist.spec.ts"
+    "test:watchlist": "playwright test tests/watchlist.spec.ts",
+    "test:tmdb": "tsx scripts/test-tmdb-api.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@netlify/plugin-nextjs": "^5.15.1",
     "@next/swc-wasm-nodejs": "13.5.1",
+    "@prisma/client": "^6.3.0",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-aspect-ratio": "^1.1.0",
@@ -79,7 +81,6 @@
     "next-themes": "^0.3.0",
     "postcss": "8.4.30",
     "prisma": "^6.3.0",
-    "@prisma/client": "^6.3.0",
     "react": "18.2.0",
     "react-day-picker": "^8.10.1",
     "react-dom": "18.2.0",
@@ -102,6 +103,8 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
     "@playwright/test": "^1.62.0",
-    "@tanstack/react-query-devtools": "^5.101.4"
+    "@tanstack/react-query-devtools": "^5.101.4",
+    "dotenv": "^17.4.2",
+    "tsx": "^4.23.12"
   }
 }

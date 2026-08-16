@@ -23,8 +23,12 @@ class ProviderRegistry {
     const envProvider = process.env.NEXT_PUBLIC_PRIMARY_PROVIDER as ProviderName;
     if (envProvider && this.providers.has(envProvider)) {
       this.primaryProvider = envProvider;
-      console.log(`[ProviderRegistry] Using primary provider: ${envProvider}`);
     }
+    
+    console.log('=== PROVIDER REGISTRY INITIALIZED ===');
+    console.log('Primary Provider:', this.primaryProvider);
+    console.log('Environment Variable:', process.env.NEXT_PUBLIC_PRIMARY_PROVIDER);
+    console.log('Available Providers:', Array.from(this.providers.keys()));
   }
 
   /**

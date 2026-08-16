@@ -111,21 +111,30 @@ export class MockProvider extends MovieProvider {
 
   async getPopularMovies(page: number = 1): Promise<PaginatedResponse<Movie>> {
     await this.delay();
+    console.log('=== MOCK PROVIDER: getPopularMovies called ===');
+    console.log('Returning movies:', TRENDING_MOVIES.length);
     return this.paginate(TRENDING_MOVIES, page);
   }
 
   async getTrendingMovies(timeWindow: 'day' | 'week' = 'week', page: number = 1): Promise<PaginatedResponse<Movie>> {
     await this.delay();
+    console.log('=== MOCK PROVIDER: getTrendingMovies called ===');
+    console.log('Returning movies:', TRENDING_MOVIES.length);
+    console.log('First movie:', TRENDING_MOVIES[0]?.title, TRENDING_MOVIES[0]?.poster);
     return this.paginate(TRENDING_MOVIES, page);
   }
 
   async getTopRatedMovies(page: number = 1): Promise<PaginatedResponse<Movie>> {
     await this.delay();
+    console.log('=== MOCK PROVIDER: getTopRatedMovies called ===');
+    console.log('Returning movies:', TOP_RATED_MOVIES.length);
     return this.paginate(TOP_RATED_MOVIES, page);
   }
 
   async getUpcomingMovies(page: number = 1): Promise<PaginatedResponse<Movie>> {
     await this.delay();
+    console.log('=== MOCK PROVIDER: getUpcomingMovies called ===');
+    console.log('Returning movies:', UPCOMING_MOVIES.length);
     return this.paginate(UPCOMING_MOVIES, page);
   }
 

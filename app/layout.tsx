@@ -1,16 +1,9 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { Providers } from '@/providers/Providers';
 import { WatchlistAnnouncer, OfflineBanner } from '@/components/watchlist/WatchlistAnnouncer';
 import { ServiceWorkerInitializer } from '@/components/ServiceWorkerInitializer';
 import { ThemeScript, ThemeNoScript } from '@/components/theme/ThemeScript';
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-inter',
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://imdb-clone.app'),
@@ -31,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeScript />
         <ThemeNoScript />
       </head>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         <Providers>
           {/* Accessibility: ARIA-live announcements for screen readers */}
           <WatchlistAnnouncer />

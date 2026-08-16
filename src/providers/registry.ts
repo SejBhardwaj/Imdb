@@ -11,13 +11,20 @@ import { MockProvider } from './mock/MockProvider';
 
 class ProviderRegistry {
   private providers: Map<ProviderName, MovieProvider> = new Map();
-  private primaryProvider: ProviderName = 'tmdb';
-  private fallbackOrder: ProviderName[] = ['tmdb', 'mock'];
+  private primaryProvider: ProviderName = 'mock'; // Default to mock
+  private fallbackOrder: ProviderName[] = ['mock', 'tmdb'];
 
   constructor() {
     // Register providers
     this.registerProvider(new TMDbProvider());
     this.registerProvider(new MockProvider());
+    
+    // Set primary provider from environment
+    const envProvider = process.env.NEXT_PUBLIC_PRIMARY_PROVIDER as ProviderName;
+    if (envProvider && this.providers.has(envProvider)) {
+      this.primaryProvider = envProvider;
+      console.log(`[ProviderRegistry] Using primary provider: ${envProvider}`);
+    }
   }
 
   /**

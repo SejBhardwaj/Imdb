@@ -195,17 +195,10 @@ body {
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 100% / 0.08;
-    --input: 0 0% 100% / 0.08;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
     --ring: 355 91% 47%;
     --radius: 0.75rem;
-  }
-
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }
 
